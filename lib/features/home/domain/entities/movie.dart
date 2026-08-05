@@ -6,6 +6,7 @@ class Movie {
     required this.posterUrl,
     required this.backdropUrl,
     required this.voiceLabel,
+    required this.mediaType,
   });
 
   final int id;
@@ -14,4 +15,5 @@ class Movie {
   final String posterUrl;
   final String backdropUrl;
   final String voiceLabel;
+  final String mediaType;
 }

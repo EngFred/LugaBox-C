@@ -9,3 +9,9 @@ class HomeFeedStarted extends HomeFeedEvent {
 class HomeFeedRefreshRequested extends HomeFeedEvent {
   const HomeFeedRefreshRequested();
 }
+
+class HomeFeedSectionPageRequested extends HomeFeedEvent {
+  const HomeFeedSectionPageRequested(this.sectionKey);
+
+  final String sectionKey;
+}

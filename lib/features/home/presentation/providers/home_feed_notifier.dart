@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../domain/entities/movie_section.dart';
 import '../../domain/usecases/get_home_sections.dart';
 import 'home_feed_dependencies.dart';
 import 'home_feed_event.dart';
@@ -18,6 +19,9 @@ class HomeFeedNotifier extends Notifier<HomeFeedState> {
     return switch (event) {
       HomeFeedStarted() => _load(),
       HomeFeedRefreshRequested() => _load(refreshing: true),
+      HomeFeedSectionPageRequested(:final sectionKey) => _loadSectionPage(
+        sectionKey,
+      ),
     };
   }
 
@@ -31,19 +35,75 @@ class HomeFeedNotifier extends Notifier<HomeFeedState> {
     );
 
     try {
-      final sections = await _getHomeSections();
+      final results = await Future.wait([
+        _getHomeSections(),
+        ref.read(getGenresProvider)(),
+      ]);
+      final sections = results[0] as List;
+      final genres = results[1] as List;
       state = state.copyWith(
-        sections: sections,
+        sections: sections.cast(),
+        genres: genres.cast(),
+        sectionPages: {
+          for (final section in sections.cast())
+            section.config.key: section.config.page,
+        },
         isLoading: false,
         isRefreshing: false,
         clearError: true,
       );
-    } catch (_) {
+    } catch (error) {
       state = state.copyWith(
         isLoading: false,
         isRefreshing: false,
-        errorMessage:
-            'Could not load movies. Check your TMDB API key or connection.',
+        errorMessage: error.toString(),
+      );
+    }
+  }
+
+  Future<void> _loadSectionPage(String sectionKey) async {
+    if (state.loadingSectionKeys.contains(sectionKey)) return;
+
+    final index = state.sections.indexWhere(
+      (section) => section.config.key == sectionKey,
+    );
+    if (index == -1) return;
+
+    final currentSection = state.sections[index];
+    final currentPage =
+        state.sectionPages[sectionKey] ?? currentSection.config.page;
+    final nextPage = currentPage + 1;
+
+    state = state.copyWith(
+      loadingSectionKeys: {...state.loadingSectionKeys, sectionKey},
+    );
+
+    try {
+      final nextSection = await _getHomeSections.sectionPage(
+        currentSection.config,
+        nextPage,
+      );
+      final updatedSections = [...state.sections];
+      updatedSections[index] = MovieSection(
+        title: currentSection.title,
+        subtitle: currentSection.subtitle,
+        layout: currentSection.layout,
+        movies: [...currentSection.movies, ...nextSection.movies],
+        config: currentSection.config,
+      );
+
+      state = state.copyWith(
+        sections: updatedSections,
+        sectionPages: {...state.sectionPages, sectionKey: nextPage},
+        loadingSectionKeys: state.loadingSectionKeys
+            .where((key) => key != sectionKey)
+            .toSet(),
+      );
+    } catch (_) {
+      state = state.copyWith(
+        loadingSectionKeys: state.loadingSectionKeys
+            .where((key) => key != sectionKey)
+            .toSet(),
       );
     }
   }

@@ -25,4 +25,18 @@ class MovieSectionConfig {
   final String? language;
   final int page;
   final bool landscape;
+
+  String get key => title.toLowerCase().replaceAll(' ', '_');
+
+  MovieSectionConfig copyWith({int? page}) {
+    return MovieSectionConfig(
+      title: title,
+      subtitle: subtitle,
+      source: source,
+      genreId: genreId,
+      language: language,
+      page: page ?? this.page,
+      landscape: landscape,
+    );
+  }
 }

@@ -1,14 +1,24 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../domain/entities/genre.dart';
 
 class GenreFilterRow extends StatelessWidget {
-  const GenreFilterRow({super.key});
+  const GenreFilterRow({super.key, required this.genres});
 
-  static const _genres = ['ACTION', 'ADVENTURE', 'ANIMATION', 'CRIME'];
+  final List<Genre> genres;
 
   @override
   Widget build(BuildContext context) {
+    final visibleGenres = genres.isEmpty
+        ? const [
+            Genre(id: 28, name: 'Action'),
+            Genre(id: 12, name: 'Adventure'),
+            Genre(id: 16, name: 'Animation'),
+            Genre(id: 80, name: 'Crime'),
+          ]
+        : genres;
+
     return Column(
       children: [
         SizedBox(
@@ -16,11 +26,11 @@ class GenreFilterRow extends StatelessWidget {
           child: ListView.separated(
             padding: const EdgeInsets.symmetric(horizontal: 27),
             scrollDirection: Axis.horizontal,
-            itemCount: _genres.length,
+            itemCount: visibleGenres.length,
             separatorBuilder: (_, _) => const SizedBox(width: 14),
             itemBuilder: (context, index) {
               return Chip(
-                label: Text(_genres[index]),
+                label: Text(visibleGenres[index].name.toUpperCase()),
                 backgroundColor: AppColors.field,
                 side: const BorderSide(color: AppColors.border),
                 shape: RoundedRectangleBorder(

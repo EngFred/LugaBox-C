@@ -4,6 +4,7 @@ import '../../../../core/network/dio_provider.dart';
 import '../../data/datasources/tmdb_remote_data_source.dart';
 import '../../data/repositories/movie_repository_impl.dart';
 import '../../domain/repositories/movie_repository.dart';
+import '../../domain/usecases/get_genres.dart';
 import '../../domain/usecases/get_home_sections.dart';
 
 final tmdbRemoteDataSourceProvider = Provider<TmdbRemoteDataSource>((ref) {
@@ -16,4 +17,8 @@ final movieRepositoryProvider = Provider<MovieRepository>((ref) {
 
 final getHomeSectionsProvider = Provider<GetHomeSections>((ref) {
   return GetHomeSections(ref.watch(movieRepositoryProvider));
+});
+
+final getGenresProvider = Provider<GetGenres>((ref) {
+  return GetGenres(ref.watch(movieRepositoryProvider));
 });

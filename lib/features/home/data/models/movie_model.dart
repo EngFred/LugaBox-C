@@ -9,9 +9,14 @@ class MovieModel extends Movie {
     required super.posterUrl,
     required super.backdropUrl,
     required super.voiceLabel,
+    required super.mediaType,
   });
 
-  factory MovieModel.fromJson(Map<String, dynamic> json, int index) {
+  factory MovieModel.fromJson(
+    Map<String, dynamic> json,
+    int index, {
+    String? mediaType,
+  }) {
     final title = (json['title'] ?? json['name'] ?? 'Untitled').toString();
     final date = (json['release_date'] ?? json['first_air_date'] ?? '')
         .toString();
@@ -24,6 +29,10 @@ class MovieModel extends Movie {
       posterUrl: ApiConstants.posterUrl(json['poster_path'] as String?),
       backdropUrl: ApiConstants.backdropUrl(json['backdrop_path'] as String?),
       voiceLabel: _vjLabels[index % _vjLabels.length],
+      mediaType:
+          mediaType ??
+          (json['media_type'] as String?) ??
+          (json['name'] != null ? 'tv' : 'movie'),
     );
   }
 

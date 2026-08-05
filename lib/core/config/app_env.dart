@@ -3,10 +3,26 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class AppEnv {
   const AppEnv._();
 
-  static String get tmdbApiKey => dotenv.env['TMDB_API_KEY'] ?? '';
+  static const _tmdbApiKeyFromDefine = String.fromEnvironment('TMDB_API_KEY');
+
+  static String get tmdbApiKey {
+    final fromDefine = _tmdbApiKeyFromDefine.trim();
+    if (_isUsableKey(fromDefine)) return fromDefine;
+
+    return (dotenv.env['TMDB_API_KEY'] ?? '').trim();
+  }
 
   static bool get hasTmdbApiKey {
-    final value = tmdbApiKey.trim();
-    return value.isNotEmpty && value != '91897819e9458ab5227fcaa49ecbf835';
+    return _isUsableKey(tmdbApiKey);
+  }
+
+  static bool _isUsableKey(String value) {
+    final normalized = value.trim();
+    if (normalized.isEmpty) return false;
+
+    final upper = normalized.toUpperCase();
+    return !upper.contains('YOUR_') &&
+        !upper.contains('API_KEY_HERE') &&
+        !upper.contains('PLACEHOLDER');
   }
 }

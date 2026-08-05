@@ -54,6 +54,12 @@ class _HomePageState extends ConsumerState<HomePage> {
               MovieSectionList(
                 section: section,
                 showGenreFilters: section.title == 'Browse by Genres',
+                genres: state.genres,
+                onLoadMore: () {
+                  notifier.onEvent(
+                    HomeFeedSectionPageRequested(section.config.key),
+                  );
+                },
               ),
           const SliverToBoxAdapter(child: SizedBox(height: 8)),
         ],

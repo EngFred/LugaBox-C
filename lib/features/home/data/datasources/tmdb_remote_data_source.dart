@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 
 import '../../../../core/config/app_env.dart';
+import '../../../../core/network/tmdb_exception.dart';
+import '../../domain/entities/genre.dart';
 import '../../domain/entities/movie_section_config.dart';
 import '../models/movie_model.dart';
 
@@ -11,7 +13,9 @@ class TmdbRemoteDataSource {
 
   Future<List<MovieModel>> fetchMovies(MovieSectionConfig config) async {
     if (!AppEnv.hasTmdbApiKey) {
-      return _fallbackMovies(config);
+      throw const TmdbException(
+        'TMDB API key is missing. Add TMDB_API_KEY to .env and fully restart the app.',
+      );
     }
 
     final response = await _dio.get<Map<String, dynamic>>(
@@ -27,8 +31,43 @@ class TmdbRemoteDataSource {
 
     return [
       for (var index = 0; index < results.length; index++)
-        MovieModel.fromJson(results[index], index),
+        MovieModel.fromJson(
+          results[index],
+          index,
+          mediaType: config.source == MovieSectionSource.discoverTv
+              ? 'tv'
+              : null,
+        ),
     ];
+  }
+
+  Future<List<Genre>> fetchGenres() async {
+    if (!AppEnv.hasTmdbApiKey) {
+      throw const TmdbException(
+        'TMDB API key is missing. Add TMDB_API_KEY to .env and fully restart the app.',
+      );
+    }
+
+    final responses = await Future.wait([
+      _dio.get<Map<String, dynamic>>('/genre/movie/list'),
+      _dio.get<Map<String, dynamic>>('/genre/tv/list'),
+    ]);
+
+    final byId = <int, Genre>{};
+    for (final response in responses) {
+      final genres = response.data?['genres'] as List<dynamic>? ?? [];
+      for (final item in genres.whereType<Map<String, dynamic>>()) {
+        final id = (item['id'] as num?)?.toInt();
+        final name = item['name'] as String?;
+        if (id != null && name != null) {
+          byId[id] = Genre(id: id, name: name);
+        }
+      }
+    }
+
+    final genres = byId.values.toList()
+      ..sort((a, b) => a.name.compareTo(b.name));
+    return genres;
   }
 
   String _endpointFor(MovieSectionConfig config) {
@@ -51,52 +90,4 @@ class TmdbRemoteDataSource {
       if (config.language != null) 'with_original_language': config.language,
     };
   }
-
-  List<MovieModel> _fallbackMovies(MovieSectionConfig config) {
-    const posters = [
-      '/xNPU7zLz5Wfb0Xywwoln2nWri9Z.jpg',
-      '/qJ2tW6WMUDux911r6m7haRef0WH.jpg',
-      '/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg',
-      '/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg',
-      '/rCzpDGLbOoPwLjy3OAm5NUPOTrC.jpg',
-      '/1E5baAaEse26fej7uHcjOgEE2t2.jpg',
-    ];
-    const backdrops = [
-      '/9BBTo63ANSmhC4e6r62OJFuK2GL.jpg',
-      '/nMKdUUepR0i5zn0y1T4CsSB5chy.jpg',
-      '/s16H6tpK2utvwDtzZ8Qy4qm5Emw.jpg',
-      '/xJHokMbljvjADYdit5fK5VQsXEG.jpg',
-      '/rAiYTfKGqDCRIIqo664sY9XZIvQ.jpg',
-      '/kXfqcdQKsToO0OUXHcrrNCHDBzO.jpg',
-    ];
-
-    return List.generate(10, (index) {
-      final title =
-          _fallbackTitles[(index + config.title.length) %
-              _fallbackTitles.length];
-      return MovieModel(
-        id: index,
-        title: title,
-        releaseYear: '${2026 - (index % 12)}',
-        posterUrl:
-            'https://image.tmdb.org/t/p/w342${posters[index % posters.length]}',
-        backdropUrl:
-            'https://image.tmdb.org/t/p/w780${backdrops[index % backdrops.length]}',
-        voiceLabel: MovieModel.voiceLabelFor(index),
-      );
-    });
-  }
-
-  static const _fallbackTitles = [
-    'Moon Knight',
-    'Spider-Man: Brand New Day',
-    'Leviticus',
-    'Lucky',
-    'Krypton',
-    'The Roundup: Punishment',
-    'Rambo: First Blood',
-    'Harry Potter and the Deathly Hallows',
-    'Everyone Loves Me',
-    'Go Go Squid!',
-  ];
 }

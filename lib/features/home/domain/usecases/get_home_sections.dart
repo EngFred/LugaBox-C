@@ -9,14 +9,18 @@ class GetHomeSections {
 
   Future<List<MovieSection>> call() async {
     final sections = await Future.wait(
-      _configs.map(_repository.getSection),
+      configs.map(_repository.getSection),
       eagerError: true,
     );
 
     return sections.where((section) => section.movies.isNotEmpty).toList();
   }
 
-  static const _configs = [
+  Future<MovieSection> sectionPage(MovieSectionConfig config, int page) {
+    return _repository.getSection(config, page: page);
+  }
+
+  static const configs = [
     MovieSectionConfig(
       title: 'Trending',
       subtitle: 'Popular picks across LugaBox',

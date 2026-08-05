@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../domain/entities/genre.dart';
 import '../../domain/entities/movie_section.dart';
 import 'genre_filter_row.dart';
 import 'movie_card.dart';
@@ -10,10 +12,14 @@ class MovieSectionList extends StatelessWidget {
     super.key,
     required this.section,
     required this.showGenreFilters,
+    required this.genres,
+    required this.onLoadMore,
   });
 
   final MovieSection section;
   final bool showGenreFilters;
+  final List<Genre> genres;
+  final VoidCallback onLoadMore;
 
   @override
   Widget build(BuildContext context) {
@@ -30,22 +36,35 @@ class MovieSectionList extends StatelessWidget {
               subtitle: section.subtitle,
             ),
             if (showGenreFilters) ...[
-              const GenreFilterRow(),
+              GenreFilterRow(genres: genres),
               const SizedBox(height: 29),
             ],
             SizedBox(
               height: landscape ? 180 : 279,
-              child: ListView.separated(
-                padding: const EdgeInsets.symmetric(horizontal: 22),
-                scrollDirection: Axis.horizontal,
-                itemCount: section.movies.length,
-                separatorBuilder: (_, _) => const SizedBox(width: 13),
-                itemBuilder: (context, index) {
-                  return MovieCard(
-                    movie: section.movies[index],
-                    landscape: landscape,
-                  );
+              child: NotificationListener<ScrollNotification>(
+                onNotification: (notification) {
+                  final metrics = notification.metrics;
+                  if (metrics.pixels > metrics.maxScrollExtent - 460) {
+                    onLoadMore();
+                  }
+                  return false;
                 },
+                child: ListView.separated(
+                  padding: const EdgeInsets.symmetric(horizontal: 22),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: section.movies.length,
+                  separatorBuilder: (_, _) => const SizedBox(width: 13),
+                  itemBuilder: (context, index) {
+                    final movie = section.movies[index];
+                    return MovieCard(
+                      movie: movie,
+                      landscape: landscape,
+                      onTap: () {
+                        context.push('/details/${movie.mediaType}/${movie.id}');
+                      },
+                    );
+                  },
+                ),
               ),
             ),
           ],
