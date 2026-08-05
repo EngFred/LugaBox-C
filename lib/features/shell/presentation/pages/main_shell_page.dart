@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../home/presentation/pages/home_page.dart';
+import '../../../vjs_genres/presentation/pages/vjs_genres_page.dart';
 
 class MainShellPage extends StatefulWidget {
   const MainShellPage({super.key});
@@ -17,7 +18,7 @@ class _MainShellPageState extends State<MainShellPage> {
 
   static const _pages = [
     HomePage(),
-    _ComingSoonPage(label: 'VJs & Genres'),
+    VjsGenresPage(),
     _ComingSoonPage(label: 'Discover'),
   ];
 

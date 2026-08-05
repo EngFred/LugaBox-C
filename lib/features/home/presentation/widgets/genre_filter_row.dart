@@ -4,9 +4,10 @@ import '../../../../core/theme/app_colors.dart';
 import '../../domain/entities/genre.dart';
 
 class GenreFilterRow extends StatelessWidget {
-  const GenreFilterRow({super.key, required this.genres});
+  const GenreFilterRow({super.key, required this.genres, this.onGenreSelected});
 
   final List<Genre> genres;
+  final void Function(Genre genre)? onGenreSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +30,10 @@ class GenreFilterRow extends StatelessWidget {
             itemCount: visibleGenres.length,
             separatorBuilder: (_, _) => const SizedBox(width: 14),
             itemBuilder: (context, index) {
-              return Chip(
-                label: Text(visibleGenres[index].name.toUpperCase()),
+              final genre = visibleGenres[index];
+              return ActionChip(
+                onPressed: () => onGenreSelected?.call(genre),
+                label: Text(genre.name.toUpperCase()),
                 backgroundColor: AppColors.field,
                 side: const BorderSide(color: AppColors.border),
                 shape: RoundedRectangleBorder(

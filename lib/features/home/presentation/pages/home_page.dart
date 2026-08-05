@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../providers/home_feed_event.dart';
@@ -58,6 +59,11 @@ class _HomePageState extends ConsumerState<HomePage> {
                 onLoadMore: () {
                   notifier.onEvent(
                     HomeFeedSectionPageRequested(section.config.key),
+                  );
+                },
+                onGenreSelected: (genre) {
+                  context.push(
+                    '/genre/${genre.id}/${Uri.encodeComponent(genre.name)}',
                   );
                 },
               ),

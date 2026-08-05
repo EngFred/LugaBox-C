@@ -14,12 +14,14 @@ class MovieSectionList extends StatelessWidget {
     required this.showGenreFilters,
     required this.genres,
     required this.onLoadMore,
+    required this.onGenreSelected,
   });
 
   final MovieSection section;
   final bool showGenreFilters;
   final List<Genre> genres;
   final VoidCallback onLoadMore;
+  final void Function(Genre genre) onGenreSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,7 @@ class MovieSectionList extends StatelessWidget {
               subtitle: section.subtitle,
             ),
             if (showGenreFilters) ...[
-              GenreFilterRow(genres: genres),
+              GenreFilterRow(genres: genres, onGenreSelected: onGenreSelected),
               const SizedBox(height: 29),
             ],
             SizedBox(

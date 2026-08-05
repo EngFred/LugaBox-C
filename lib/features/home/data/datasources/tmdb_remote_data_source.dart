@@ -41,6 +41,51 @@ class TmdbRemoteDataSource {
     ];
   }
 
+  Future<List<MovieModel>> fetchMoviesByGenre({
+    required int genreId,
+    required int page,
+  }) async {
+    if (!AppEnv.hasTmdbApiKey) {
+      throw const TmdbException(
+        'TMDB API key is missing. Add TMDB_API_KEY to .env and fully restart the app.',
+      );
+    }
+
+    final response = await _dio.get<Map<String, dynamic>>(
+      '/discover/movie',
+      queryParameters: {
+        'page': page,
+        'include_adult': false,
+        'sort_by': 'popularity.desc',
+        'with_genres': genreId,
+      },
+    );
+
+    return _mapMovieResults(response.data, page: page, mediaType: 'movie');
+  }
+
+  Future<List<MovieModel>> fetchMoviesForVj({
+    required String vjName,
+    required int page,
+  }) async {
+    if (!AppEnv.hasTmdbApiKey) {
+      throw const TmdbException(
+        'TMDB API key is missing. Add TMDB_API_KEY to .env and fully restart the app.',
+      );
+    }
+
+    final response = await _dio.get<Map<String, dynamic>>(
+      '/trending/all/week',
+      queryParameters: {'page': page, 'include_adult': false},
+    );
+
+    return _mapMovieResults(
+      response.data,
+      page: page,
+      voiceLabel: vjName,
+    ).take(18).toList();
+  }
+
   Future<List<Genre>> fetchGenres() async {
     if (!AppEnv.hasTmdbApiKey) {
       throw const TmdbException(
@@ -68,6 +113,29 @@ class TmdbRemoteDataSource {
     final genres = byId.values.toList()
       ..sort((a, b) => a.name.compareTo(b.name));
     return genres;
+  }
+
+  List<MovieModel> _mapMovieResults(
+    Map<String, dynamic>? data, {
+    required int page,
+    String? mediaType,
+    String? voiceLabel,
+  }) {
+    final results = (data?['results'] as List<dynamic>? ?? [])
+        .whereType<Map<String, dynamic>>()
+        .where((json) => json['poster_path'] != null)
+        .take(18)
+        .toList();
+
+    return [
+      for (var index = 0; index < results.length; index++)
+        MovieModel.fromJson(
+          results[index],
+          ((page - 1) * 20) + index,
+          mediaType: mediaType,
+          voiceLabel: voiceLabel,
+        ),
+    ];
   }
 
   String _endpointFor(MovieSectionConfig config) {

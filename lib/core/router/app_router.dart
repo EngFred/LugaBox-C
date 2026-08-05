@@ -8,6 +8,8 @@ import '../../features/movie_details/presentation/pages/trailer_player_page.dart
 import '../../features/person/presentation/pages/person_details_page.dart';
 import '../../features/shell/presentation/pages/main_shell_page.dart';
 import '../../features/splash/presentation/pages/splash_page.dart';
+import '../../features/vjs_genres/presentation/pages/title_listing_page.dart';
+import '../../features/vjs_genres/presentation/providers/title_listing_state.dart';
 
 final appRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
@@ -52,6 +54,27 @@ final appRouterProvider = Provider<GoRouter>((ref) {
         builder: (context, state) {
           return PersonDetailsPage(
             id: int.tryParse(state.pathParameters['id'] ?? '') ?? 0,
+          );
+        },
+      ),
+      GoRoute(
+        path: '/genre/:id/:name',
+        builder: (context, state) {
+          return TitleListingPage(
+            args: TitleListingArgs.genre(
+              id: int.tryParse(state.pathParameters['id'] ?? '') ?? 0,
+              title: Uri.decodeComponent(state.pathParameters['name'] ?? ''),
+            ),
+          );
+        },
+      ),
+      GoRoute(
+        path: '/vj/:name',
+        builder: (context, state) {
+          return TitleListingPage(
+            args: TitleListingArgs.vj(
+              vjName: Uri.decodeComponent(state.pathParameters['name'] ?? ''),
+            ),
           );
         },
       ),
