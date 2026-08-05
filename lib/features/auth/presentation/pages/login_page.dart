@@ -36,18 +36,18 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.fromLTRB(31, 27, 31, 28),
+          padding: const EdgeInsets.fromLTRB(31, 24, 31, 24),
           child: Form(
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AuthBackButton(onPressed: () => context.go('/')),
-                const SizedBox(height: 55),
+                const SizedBox(height: 42),
                 const Text(
                   'Welcome back',
                   style: TextStyle(
-                    fontSize: 38,
+                    fontSize: 34,
                     fontWeight: FontWeight.w900,
                     height: 1.05,
                   ),
@@ -57,16 +57,16 @@ class _LoginPageState extends State<LoginPage> {
                   'Use your password to continue watching.',
                   style: TextStyle(
                     color: AppColors.muted,
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
-                const SizedBox(height: 118),
+                const SizedBox(height: 76),
                 _AccountCard(
                   email: _emailController.text,
                   onChange: () => context.push(RegisterPage.routePath),
                 ),
-                const SizedBox(height: 44),
+                const SizedBox(height: 34),
                 AuthTextField(
                   controller: _passwordController,
                   label: 'Password',
@@ -81,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 25),
                 AuthPrimaryButton(label: 'Sign in', onPressed: _submit),
-                const SizedBox(height: 38),
+                const SizedBox(height: 26),
                 Center(
                   child: TextButton(
                     onPressed: () {},
@@ -95,11 +95,11 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 20),
                 const _DividerWithText(),
-                const SizedBox(height: 37),
+                const SizedBox(height: 25),
                 SocialAuthButton(onPressed: _completeLogin),
-                const SizedBox(height: 58),
+                const SizedBox(height: 38),
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -149,7 +149,7 @@ class _AccountCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(22),
+      padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
         color: AppColors.field,
         borderRadius: BorderRadius.circular(16),
@@ -158,16 +158,16 @@ class _AccountCard extends StatelessWidget {
       child: Row(
         children: [
           const CircleAvatar(
-            radius: 25,
+            radius: 22,
             backgroundColor: Color(0xFF292929),
             child: Icon(Icons.person_outline, color: AppColors.white),
           ),
-          const SizedBox(width: 18),
+          const SizedBox(width: 14),
           Expanded(
             child: Text(
               email,
               overflow: TextOverflow.ellipsis,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w900),
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w900),
             ),
           ),
           TextButton(

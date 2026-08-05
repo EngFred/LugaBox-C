@@ -42,7 +42,7 @@ class MovieSectionList extends StatelessWidget {
               const SizedBox(height: 29),
             ],
             SizedBox(
-              height: landscape ? 180 : 279,
+              height: landscape ? 184 : 268,
               child: NotificationListener<ScrollNotification>(
                 onNotification: (notification) {
                   final metrics = notification.metrics;

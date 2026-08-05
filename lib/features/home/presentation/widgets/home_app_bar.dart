@@ -1,35 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../../../core/theme/app_colors.dart';
-import '../../../../core/widgets/lugabox_logo.dart';
-import '../../../../core/widgets/profile_menu_button.dart';
+import '../../../../core/widgets/lugabox_top_bar.dart';
 
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(27, 28, 18, 38),
-        child: Row(
-          children: [
-            const Expanded(child: LugaBoxLogo(size: 19)),
-            IconButton(
-              onPressed: () => context.push('/search'),
-              icon: const Icon(Icons.search_rounded, size: 31),
-              color: AppColors.white,
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.cast_rounded, size: 29),
-              color: AppColors.white,
-            ),
-            const ProfileMenuButton(),
-          ],
-        ),
-      ),
-    );
+    return const SliverToBoxAdapter(child: LugaBoxTopBar());
   }
 }

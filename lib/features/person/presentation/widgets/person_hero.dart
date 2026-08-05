@@ -16,7 +16,7 @@ class PersonHero extends StatelessWidget {
         children: [
           SizedBox(
             width: double.infinity,
-            height: 585,
+            height: 500,
             child: Image.network(
               person.profileUrl,
               fit: BoxFit.cover,
@@ -58,7 +58,7 @@ class PersonHero extends StatelessWidget {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
-                fontSize: 42,
+                fontSize: 34,
                 fontWeight: FontWeight.w900,
                 height: 1,
               ),

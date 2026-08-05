@@ -16,19 +16,19 @@ class AuthPrimaryButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 64,
+      height: 58,
       child: FilledButton(
         onPressed: onPressed,
         style: FilledButton.styleFrom(
           backgroundColor: AppColors.red,
           foregroundColor: AppColors.white,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(13),
           ),
         ),
         child: Text(
           label,
-          style: const TextStyle(fontSize: 19, fontWeight: FontWeight.w900),
+          style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w900),
         ),
       ),
     );

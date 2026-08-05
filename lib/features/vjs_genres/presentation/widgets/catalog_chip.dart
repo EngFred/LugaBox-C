@@ -15,11 +15,11 @@ class CatalogChip extends StatelessWidget {
       label: Text(label),
       backgroundColor: AppColors.field,
       side: const BorderSide(color: AppColors.border),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(28)),
-      labelPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 13),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(22)),
+      labelPadding: const EdgeInsets.symmetric(horizontal: 13, vertical: 8),
       labelStyle: const TextStyle(
         color: AppColors.white,
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: FontWeight.w900,
       ),
     );

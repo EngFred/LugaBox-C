@@ -47,7 +47,7 @@ class _AuthTextFieldState extends State<AuthTextField> {
             hintText: widget.hint,
             hintStyle: const TextStyle(
               color: AppColors.muted,
-              fontSize: 19,
+              fontSize: 16,
               fontWeight: FontWeight.w800,
             ),
             suffixIcon: widget.obscureText
@@ -63,8 +63,8 @@ class _AuthTextFieldState extends State<AuthTextField> {
             filled: true,
             fillColor: AppColors.field,
             contentPadding: const EdgeInsets.symmetric(
-              horizontal: 24,
-              vertical: 21,
+              horizontal: 20,
+              vertical: 17,
             ),
             enabledBorder: _border(AppColors.border),
             focusedBorder: _border(AppColors.white),

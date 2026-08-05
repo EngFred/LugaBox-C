@@ -47,6 +47,7 @@ dependencies:
   flutter_native_splash: ^2.4.8
   flutter_launcher_icons: ^0.14.4
   image: ^4.9.1
+  fluttertoast: ^10.0.0
 
 dev_dependencies:
   flutter_test:

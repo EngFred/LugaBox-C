@@ -15,14 +15,14 @@ class BiographySection extends StatelessWidget {
           children: [
             const Text(
               'Biography',
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.w900),
+              style: TextStyle(fontSize: 23, fontWeight: FontWeight.w900),
             ),
             const SizedBox(height: 22),
             Text(
               biography.isEmpty ? 'Biography is not available yet.' : biography,
               style: const TextStyle(
                 color: Color(0xFFC1C1C1),
-                fontSize: 20,
+                fontSize: 16,
                 fontWeight: FontWeight.w600,
                 height: 1.43,
               ),

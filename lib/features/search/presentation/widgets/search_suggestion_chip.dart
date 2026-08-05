@@ -20,10 +20,10 @@ class SearchSuggestionChip extends StatelessWidget {
       backgroundColor: AppColors.field,
       side: const BorderSide(color: AppColors.border),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-      labelPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      labelPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 7),
       labelStyle: const TextStyle(
         color: AppColors.white,
-        fontSize: 16,
+        fontSize: 14,
         fontWeight: FontWeight.w900,
       ),
     );

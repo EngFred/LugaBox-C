@@ -66,12 +66,12 @@ class _SearchPageState extends ConsumerState<SearchPage> {
             slivers: [
               SliverToBoxAdapter(
                 child: Padding(
-                  padding: const EdgeInsets.fromLTRB(14, 15, 17, 17),
+                  padding: const EdgeInsets.fromLTRB(14, 12, 17, 12),
                   child: Row(
                     children: [
                       IconButton(
                         onPressed: context.pop,
-                        icon: const Icon(Icons.arrow_back, size: 31),
+                        icon: const Icon(Icons.arrow_back, size: 28),
                       ),
                       const SizedBox(width: 7),
                       Expanded(
@@ -83,7 +83,7 @@ class _SearchPageState extends ConsumerState<SearchPage> {
                           onSubmitted: (value) =>
                               notifier.onEvent(SearchSubmitted(value)),
                           style: const TextStyle(
-                            fontSize: 19,
+                            fontSize: 16,
                             fontWeight: FontWeight.w800,
                           ),
                           decoration: InputDecoration(
@@ -104,7 +104,7 @@ class _SearchPageState extends ConsumerState<SearchPage> {
                             filled: true,
                             fillColor: AppColors.surface,
                             contentPadding: const EdgeInsets.symmetric(
-                              vertical: 20,
+                              vertical: 15,
                             ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(16),
@@ -242,7 +242,7 @@ class _Suggestions extends ConsumerWidget {
     final notifier = ref.read(searchNotifierProvider.notifier);
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(23, 28, 23, 0),
+      padding: const EdgeInsets.fromLTRB(23, 24, 23, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -251,16 +251,16 @@ class _Suggestions extends ConsumerWidget {
               Icon(
                 Icons.local_fire_department_rounded,
                 color: AppColors.red,
-                size: 27,
+                size: 24,
               ),
               SizedBox(width: 13),
               Text(
                 'Popular searches',
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
               ),
             ],
           ),
-          const SizedBox(height: 22),
+          const SizedBox(height: 18),
           Wrap(
             spacing: 11,
             runSpacing: 14,
@@ -275,19 +275,19 @@ class _Suggestions extends ConsumerWidget {
                 ),
             ],
           ),
-          const SizedBox(height: 68),
+          const SizedBox(height: 48),
           Row(
             children: [
               const Icon(
                 Icons.history_rounded,
                 color: AppColors.muted,
-                size: 27,
+                size: 24,
               ),
               const SizedBox(width: 13),
               const Expanded(
                 child: Text(
                   'Recent searches',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
                 ),
               ),
               TextButton(
@@ -303,7 +303,7 @@ class _Suggestions extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: 22),
+          const SizedBox(height: 18),
           for (final query in state.recentSearches)
             GestureDetector(
               onTap: () {
@@ -311,8 +311,8 @@ class _Suggestions extends ConsumerWidget {
                 notifier.onEvent(SearchSubmitted(query));
               },
               child: Container(
-                height: 70,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                height: 58,
+                padding: const EdgeInsets.symmetric(horizontal: 18),
                 decoration: BoxDecoration(
                   color: AppColors.field,
                   borderRadius: BorderRadius.circular(13),
@@ -321,12 +321,12 @@ class _Suggestions extends ConsumerWidget {
                 child: Row(
                   children: [
                     const Icon(Icons.history_rounded, color: AppColors.muted),
-                    const SizedBox(width: 24),
+                    const SizedBox(width: 18),
                     Expanded(
                       child: Text(
                         query,
                         style: const TextStyle(
-                          fontSize: 18,
+                          fontSize: 16,
                           fontWeight: FontWeight.w900,
                         ),
                       ),

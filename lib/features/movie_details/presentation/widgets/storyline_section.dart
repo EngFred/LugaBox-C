@@ -9,22 +9,22 @@ class StorylineSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(33, 0, 33, 38),
+        padding: const EdgeInsets.fromLTRB(33, 0, 33, 34),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
               'Storyline',
-              style: TextStyle(fontSize: 27, fontWeight: FontWeight.w900),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900),
             ),
-            const SizedBox(height: 22),
+            const SizedBox(height: 18),
             Text(
               storyline.isEmpty ? 'Storyline is not available yet.' : storyline,
               maxLines: 5,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                 color: Color(0xFFC2C2C2),
-                fontSize: 19,
+                fontSize: 16,
                 fontWeight: FontWeight.w600,
                 height: 1.45,
               ),

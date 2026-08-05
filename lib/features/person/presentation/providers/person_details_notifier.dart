@@ -21,7 +21,7 @@ class PersonDetailsNotifier extends Notifier<PersonDetailsState> {
   }
 
   Future<void> _load(int id) async {
-    state = state.copyWith(isLoading: true, clearError: true);
+    state = const PersonDetailsState(isLoading: true);
 
     try {
       final person = await _getPersonDetails(id);

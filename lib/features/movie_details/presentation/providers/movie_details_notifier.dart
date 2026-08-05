@@ -21,7 +21,7 @@ class MovieDetailsNotifier extends Notifier<MovieDetailsState> {
   }
 
   Future<void> _load(String mediaType, int id) async {
-    state = state.copyWith(isLoading: true, clearError: true);
+    state = const MovieDetailsState(isLoading: true);
 
     try {
       final details = await _getMovieDetails(mediaType: mediaType, id: id);

@@ -17,8 +17,8 @@ class CatalogChipWrap<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      spacing: 12,
-      runSpacing: 14,
+      spacing: 9,
+      runSpacing: 10,
       children: [
         for (final item in items)
           CatalogChip(

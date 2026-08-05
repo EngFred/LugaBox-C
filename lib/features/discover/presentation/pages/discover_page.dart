@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
-import '../../../../core/widgets/lugabox_logo.dart';
+import '../../../../core/widgets/lugabox_top_bar.dart';
 import '../providers/discover_event.dart';
 import '../providers/discover_providers.dart';
 import '../widgets/discover_filter_bar.dart';
@@ -40,28 +39,7 @@ class _DiscoverPageState extends ConsumerState<DiscoverPage> {
       child: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(27, 28, 18, 46),
-              child: Row(
-                children: [
-                  const Expanded(child: LugaBoxLogo(size: 19)),
-                  IconButton(
-                    onPressed: () => context.push('/search'),
-                    icon: const Icon(Icons.search_rounded, size: 31),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.cast_rounded, size: 29),
-                  ),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.more_vert_rounded, size: 29),
-                  ),
-                ],
-              ),
-            ),
-          ),
+          const SliverToBoxAdapter(child: LugaBoxTopBar()),
           SliverPersistentHeader(
             pinned: true,
             delegate: _DiscoverHeaderDelegate(),
@@ -145,10 +123,10 @@ class _DiscoverPageState extends ConsumerState<DiscoverPage> {
 
 class _DiscoverHeaderDelegate extends SliverPersistentHeaderDelegate {
   @override
-  double get minExtent => 78;
+  double get minExtent => 62;
 
   @override
-  double get maxExtent => 78;
+  double get maxExtent => 62;
 
   @override
   Widget build(
@@ -162,7 +140,7 @@ class _DiscoverHeaderDelegate extends SliverPersistentHeaderDelegate {
       padding: const EdgeInsets.symmetric(horizontal: 22),
       child: const Text(
         'Discover',
-        style: TextStyle(fontSize: 35, fontWeight: FontWeight.w900),
+        style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),
       ),
     );
   }

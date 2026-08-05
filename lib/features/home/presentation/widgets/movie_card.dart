@@ -54,7 +54,7 @@ class MovieCard extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
-                fontSize: 16,
+                fontSize: 14,
                 fontWeight: FontWeight.w900,
                 height: 1.1,
               ),
@@ -66,7 +66,7 @@ class MovieCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                 color: AppColors.muted,
-                fontSize: 13,
+                fontSize: 12,
                 fontWeight: FontWeight.w800,
               ),
             ),

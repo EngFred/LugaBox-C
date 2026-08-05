@@ -1,4 +1,5 @@
 import 'person_photo.dart';
+import '../../../home/domain/entities/movie.dart';
 
 class PersonDetails {
   const PersonDetails({
@@ -10,6 +11,7 @@ class PersonDetails {
     required this.biography,
     required this.profileUrl,
     required this.photos,
+    required this.knownForTitles,
     this.imdbId,
     this.instagramId,
     this.facebookId,
@@ -23,6 +25,7 @@ class PersonDetails {
   final String biography;
   final String profileUrl;
   final List<PersonPhoto> photos;
+  final List<Movie> knownForTitles;
   final String? imdbId;
   final String? instagramId;
   final String? facebookId;

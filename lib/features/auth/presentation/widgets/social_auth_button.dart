@@ -9,7 +9,7 @@ class SocialAuthButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 58,
+      height: 53,
       child: FilledButton(
         onPressed: onPressed,
         style: FilledButton.styleFrom(
@@ -30,10 +30,10 @@ class SocialAuthButton extends StatelessWidget {
                 fontWeight: FontWeight.w900,
               ),
             ),
-            SizedBox(width: 28),
+            SizedBox(width: 22),
             Text(
               'Continue with Google',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
             ),
           ],
         ),

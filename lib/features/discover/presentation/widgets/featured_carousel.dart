@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -15,10 +17,28 @@ class FeaturedCarousel extends StatefulWidget {
 
 class _FeaturedCarouselState extends State<FeaturedCarousel> {
   final _controller = PageController(viewportFraction: .92);
+  Timer? _timer;
   int _index = 0;
 
   @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(const Duration(seconds: 4), (_) {
+      if (!mounted || widget.items.length < 2 || !_controller.hasClients) {
+        return;
+      }
+      final next = (_index + 1) % widget.items.length;
+      _controller.animateToPage(
+        next,
+        duration: const Duration(milliseconds: 420),
+        curve: Curves.easeOutCubic,
+      );
+    });
+  }
+
+  @override
   void dispose() {
+    _timer?.cancel();
     _controller.dispose();
     super.dispose();
   }
@@ -30,7 +50,7 @@ class _FeaturedCarouselState extends State<FeaturedCarousel> {
     return Column(
       children: [
         SizedBox(
-          height: 440,
+          height: 340,
           child: PageView.builder(
             controller: _controller,
             itemCount: widget.items.length,
@@ -43,7 +63,7 @@ class _FeaturedCarouselState extends State<FeaturedCarousel> {
                 child: Container(
                   margin: const EdgeInsets.only(right: 8),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(22),
+                    borderRadius: BorderRadius.circular(18),
                     image: DecorationImage(
                       image: NetworkImage(item.backdropUrl),
                       fit: BoxFit.cover,
@@ -51,7 +71,7 @@ class _FeaturedCarouselState extends State<FeaturedCarousel> {
                   ),
                   child: DecoratedBox(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(22),
+                      borderRadius: BorderRadius.circular(18),
                       gradient: LinearGradient(
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
@@ -63,15 +83,15 @@ class _FeaturedCarouselState extends State<FeaturedCarousel> {
                       ),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(30, 0, 30, 35),
+                      padding: const EdgeInsets.fromLTRB(24, 0, 24, 26),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Container(
                             padding: const EdgeInsets.symmetric(
-                              horizontal: 13,
-                              vertical: 9,
+                              horizontal: 12,
+                              vertical: 8,
                             ),
                             decoration: BoxDecoration(
                               color: AppColors.red,
@@ -80,29 +100,29 @@ class _FeaturedCarouselState extends State<FeaturedCarousel> {
                             child: const Text(
                               'FEATURED',
                               style: TextStyle(
-                                fontSize: 13,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w900,
                               ),
                             ),
                           ),
-                          const SizedBox(height: 20),
+                          const SizedBox(height: 16),
                           Text(
                             item.title,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
-                              fontSize: 32,
+                              fontSize: 24,
                               fontWeight: FontWeight.w900,
                             ),
                           ),
-                          const SizedBox(height: 15),
+                          const SizedBox(height: 12),
                           Text(
                             item.overview,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: const TextStyle(
                               color: Color(0xFFD3D3D3),
-                              fontSize: 16,
+                              fontSize: 14,
                               fontWeight: FontWeight.w600,
                               height: 1.35,
                             ),

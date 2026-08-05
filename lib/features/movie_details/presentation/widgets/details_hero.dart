@@ -16,7 +16,7 @@ class DetailsHero extends StatelessWidget {
       child: Stack(
         children: [
           SizedBox(
-            height: 500,
+            height: 455,
             width: double.infinity,
             child: Image.network(
               details.backdropUrl.isEmpty
@@ -46,7 +46,7 @@ class DetailsHero extends StatelessWidget {
           Positioned(
             left: 33,
             right: 33,
-            bottom: 26,
+            bottom: 22,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -55,26 +55,26 @@ class DetailsHero extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
-                    fontSize: 48,
+                    fontSize: 38,
                     fontWeight: FontWeight.w900,
                     height: .94,
                   ),
                 ),
                 if (details.tagline.isNotEmpty) ...[
-                  const SizedBox(height: 23),
+                  const SizedBox(height: 18),
                   Text(
                     details.tagline,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       color: Color(0xFFCFCFCF),
-                      fontSize: 19,
+                      fontSize: 16,
                       fontStyle: FontStyle.italic,
                       fontWeight: FontWeight.w700,
                     ),
                   ),
                 ],
-                const SizedBox(height: 21),
+                const SizedBox(height: 17),
                 Wrap(
                   spacing: 12,
                   runSpacing: 10,
@@ -86,13 +86,13 @@ class DetailsHero extends StatelessWidget {
                         const Icon(
                           Icons.star_rounded,
                           color: Color(0xFFFFD54F),
-                          size: 26,
+                          size: 22,
                         ),
                         const SizedBox(width: 5),
                         Text(
                           details.rating.toStringAsFixed(1),
                           style: const TextStyle(
-                            fontSize: 20,
+                            fontSize: 17,
                             fontWeight: FontWeight.w900,
                           ),
                         ),
@@ -114,7 +114,7 @@ class DetailsHero extends StatelessWidget {
 
   static const _metaStyle = TextStyle(
     color: Color(0xFFD0D0D0),
-    fontSize: 18,
+    fontSize: 15,
     fontWeight: FontWeight.w900,
   );
 }

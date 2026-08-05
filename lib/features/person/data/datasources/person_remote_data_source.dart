@@ -18,7 +18,9 @@ class PersonRemoteDataSource {
 
     final response = await _dio.get<Map<String, dynamic>>(
       '/person/$id',
-      queryParameters: {'append_to_response': 'images,external_ids'},
+      queryParameters: {
+        'append_to_response': 'images,external_ids,combined_credits',
+      },
     );
 
     return PersonDetailsModel.fromJson(response.data ?? {});

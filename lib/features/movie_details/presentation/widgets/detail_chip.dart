@@ -11,7 +11,7 @@ class DetailChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 11, vertical: 7),
       decoration: BoxDecoration(
         color: outlined ? Colors.transparent : AppColors.field,
         borderRadius: BorderRadius.circular(5),
@@ -21,7 +21,7 @@ class DetailChip extends StatelessWidget {
         label,
         style: TextStyle(
           color: outlined ? AppColors.red : AppColors.white,
-          fontSize: 14,
+          fontSize: 12,
           fontWeight: FontWeight.w900,
         ),
       ),

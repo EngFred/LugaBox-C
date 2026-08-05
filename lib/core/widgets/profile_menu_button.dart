@@ -63,106 +63,108 @@ class _ProfileSheet extends StatelessWidget {
       child: SafeArea(
         right: false,
         child: Container(
-          width: MediaQuery.sizeOf(context).width * .82,
+          width: MediaQuery.sizeOf(context).width * .80,
           height: double.infinity,
-          padding: const EdgeInsets.fromLTRB(33, 32, 33, 24),
+          padding: const EdgeInsets.fromLTRB(28, 22, 28, 22),
           decoration: const BoxDecoration(color: AppColors.black),
-          child: Column(
-            children: [
-              Align(
-                alignment: Alignment.topRight,
-                child: IconButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  icon: const Icon(Icons.more_vert_rounded, size: 28),
-                  color: AppColors.muted,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Align(
+                  alignment: Alignment.topRight,
+                  child: IconButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    icon: const Icon(Icons.more_vert_rounded, size: 26),
+                    color: AppColors.muted,
+                  ),
                 ),
-              ),
-              Container(
-                width: 140,
-                height: 140,
-                decoration: BoxDecoration(
-                  color: AppColors.field,
-                  shape: BoxShape.circle,
-                  border: Border.all(color: AppColors.red, width: 3),
+                Container(
+                  width: 112,
+                  height: 112,
+                  decoration: BoxDecoration(
+                    color: AppColors.field,
+                    shape: BoxShape.circle,
+                    border: Border.all(color: AppColors.red, width: 2.5),
+                  ),
+                  child: const Icon(
+                    Icons.person_rounded,
+                    size: 58,
+                    color: AppColors.muted,
+                  ),
                 ),
-                child: const Icon(
-                  Icons.person_rounded,
-                  size: 72,
-                  color: AppColors.muted,
+                const SizedBox(height: 22),
+                const Text(
+                  'Engineer Fred',
+                  style: TextStyle(
+                    color: Color(0xFFFFB300),
+                    fontSize: 21,
+                    fontWeight: FontWeight.w900,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 29),
-              const Text(
-                'Engineer Fred',
-                style: TextStyle(
-                  color: Color(0xFFFFB300),
-                  fontSize: 24,
-                  fontWeight: FontWeight.w900,
+                const SizedBox(height: 7),
+                const Text(
+                  'test@gmail.com',
+                  style: TextStyle(
+                    color: AppColors.muted,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 9),
-              const Text(
-                'test@gmail.com',
-                style: TextStyle(
-                  color: AppColors.muted,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w700,
+                const SizedBox(height: 34),
+                const _ProfileMenuTile(
+                  icon: Icons.person_outline_rounded,
+                  label: 'Profile',
                 ),
-              ),
-              const SizedBox(height: 50),
-              const _ProfileMenuTile(
-                icon: Icons.person_outline_rounded,
-                label: 'Profile',
-              ),
-              const _ProfileMenuTile(
-                icon: Icons.download_for_offline_outlined,
-                label: 'Downloads',
-              ),
-              const _ProfileMenuTile(
-                icon: Icons.history_rounded,
-                label: 'My Activity',
-              ),
-              const _ProfileMenuTile(
-                icon: Icons.settings_outlined,
-                label: 'Settings',
-              ),
-              const Divider(color: Color(0xFF191919), height: 31),
-              const _ProfileMenuTile(
-                icon: Icons.report_problem_outlined,
-                label: 'Report an Issue',
-                accent: Color(0xFFFFD12D),
-              ),
-              const _ProfileMenuTile(
-                icon: Icons.add_to_queue_outlined,
-                label: 'Request a Movie',
-                accent: Color(0xFF4A7DFF),
-              ),
-              const Divider(color: Color(0xFF191919), height: 43),
-              _ProfileMenuTile(
-                icon: Icons.logout_rounded,
-                label: 'Logout',
-                accent: AppColors.red,
-                textColor: AppColors.red,
-                onTap: () => _confirmLogout(context),
-              ),
-              const Spacer(),
-              const Text(
-                'LugaBox',
-                style: TextStyle(
-                  color: Color(0xFF242424),
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 1.4,
+                const _ProfileMenuTile(
+                  icon: Icons.download_for_offline_outlined,
+                  label: 'Downloads',
                 ),
-              ),
-              const SizedBox(height: 8),
-              const Text(
-                'v2.0.0',
-                style: TextStyle(
-                  color: Color(0xFF242424),
-                  fontWeight: FontWeight.w900,
+                const _ProfileMenuTile(
+                  icon: Icons.history_rounded,
+                  label: 'My Activity',
                 ),
-              ),
-            ],
+                const _ProfileMenuTile(
+                  icon: Icons.settings_outlined,
+                  label: 'Settings',
+                ),
+                const Divider(color: Color(0xFF191919), height: 24),
+                const _ProfileMenuTile(
+                  icon: Icons.report_problem_outlined,
+                  label: 'Report an Issue',
+                  accent: Color(0xFFFFD12D),
+                ),
+                const _ProfileMenuTile(
+                  icon: Icons.add_to_queue_outlined,
+                  label: 'Request a Movie',
+                  accent: Color(0xFF4A7DFF),
+                ),
+                const Divider(color: Color(0xFF191919), height: 30),
+                _ProfileMenuTile(
+                  icon: Icons.logout_rounded,
+                  label: 'Logout',
+                  accent: AppColors.red,
+                  textColor: AppColors.red,
+                  onTap: () => _confirmLogout(context),
+                ),
+                const SizedBox(height: 56),
+                const Text(
+                  'LugaBox',
+                  style: TextStyle(
+                    color: Color(0xFF242424),
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 1.4,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  'v2.0.0',
+                  style: TextStyle(
+                    color: Color(0xFF242424),
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -221,17 +223,17 @@ class _ProfileMenuTile extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(10),
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16),
+        padding: const EdgeInsets.symmetric(vertical: 12),
         child: Row(
           children: [
-            Icon(icon, color: accent, size: 29),
-            const SizedBox(width: 28),
+            Icon(icon, color: accent, size: 25),
+            const SizedBox(width: 22),
             Expanded(
               child: Text(
                 label,
                 style: TextStyle(
                   color: textColor,
-                  fontSize: 20,
+                  fontSize: 18,
                   fontWeight: FontWeight.w900,
                 ),
               ),

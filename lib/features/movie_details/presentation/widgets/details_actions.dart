@@ -13,21 +13,23 @@ class DetailsActions extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(33, 0, 33, 31),
+        padding: const EdgeInsets.fromLTRB(33, 0, 33, 28),
         child: Column(
           children: [
             SizedBox(
               width: double.infinity,
-              height: 74,
+              height: 58,
               child: FilledButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.play_arrow_rounded, size: 35),
+                onPressed: details.trailer == null
+                    ? null
+                    : () => _openTrailer(context),
+                icon: const Icon(Icons.play_arrow_rounded, size: 28),
                 label: const Text('Play'),
                 style: FilledButton.styleFrom(
                   backgroundColor: AppColors.red,
                   foregroundColor: Colors.black,
                   textStyle: const TextStyle(
-                    fontSize: 25,
+                    fontSize: 20,
                     fontWeight: FontWeight.w900,
                   ),
                   shape: RoundedRectangleBorder(
@@ -36,17 +38,15 @@ class DetailsActions extends StatelessWidget {
                 ),
               ),
             ),
-            const SizedBox(height: 18),
+            const SizedBox(height: 14),
             SizedBox(
               width: double.infinity,
-              height: 74,
+              height: 58,
               child: FilledButton.icon(
                 onPressed: details.trailer == null
                     ? null
-                    : () => context.push(
-                        '/trailer/${Uri.encodeComponent(details.title)}/${details.trailer!.key}',
-                      ),
-                icon: const Icon(Icons.ondemand_video_rounded, size: 31),
+                    : () => _openTrailer(context),
+                icon: const Icon(Icons.ondemand_video_rounded, size: 25),
                 label: const Text('Watch Trailer'),
                 style: FilledButton.styleFrom(
                   backgroundColor: AppColors.field,
@@ -54,7 +54,7 @@ class DetailsActions extends StatelessWidget {
                   disabledBackgroundColor: AppColors.field,
                   disabledForegroundColor: AppColors.muted,
                   textStyle: const TextStyle(
-                    fontSize: 21,
+                    fontSize: 18,
                     fontWeight: FontWeight.w900,
                   ),
                   shape: RoundedRectangleBorder(
@@ -66,6 +66,12 @@ class DetailsActions extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  void _openTrailer(BuildContext context) {
+    context.push(
+      '/trailer/${Uri.encodeComponent(details.title)}/${details.trailer!.key}',
     );
   }
 }

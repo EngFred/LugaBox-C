@@ -9,6 +9,7 @@ import '../widgets/person_chips.dart';
 import '../widgets/person_hero.dart';
 import '../widgets/person_links.dart';
 import '../widgets/person_photos_section.dart';
+import '../../../movie_details/presentation/widgets/details_movie_row.dart';
 
 class PersonDetailsPage extends ConsumerStatefulWidget {
   const PersonDetailsPage({super.key, required this.id});
@@ -61,6 +62,10 @@ class _PersonDetailsPageState extends ConsumerState<PersonDetailsPage> {
           BiographySection(biography: person.biography),
           PersonLinks(person: person),
           PersonPhotosSection(photos: person.photos),
+          DetailsMovieRow(
+            title: 'Movies & Shows',
+            movies: person.knownForTitles,
+          ),
         ],
       ),
     );
