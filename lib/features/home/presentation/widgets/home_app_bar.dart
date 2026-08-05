@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/lugabox_logo.dart';
@@ -15,7 +16,7 @@ class HomeAppBar extends StatelessWidget {
           children: [
             const Expanded(child: LugaBoxLogo(size: 19)),
             IconButton(
-              onPressed: () {},
+              onPressed: () => context.push('/search'),
               icon: const Icon(Icons.search_rounded, size: 31),
               color: AppColors.white,
             ),

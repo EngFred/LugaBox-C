@@ -4,6 +4,8 @@ import '../../../../core/config/app_env.dart';
 import '../../../../core/network/tmdb_exception.dart';
 import '../../domain/entities/genre.dart';
 import '../../domain/entities/movie_section_config.dart';
+import '../../../discover/data/models/discover_person_model.dart';
+import '../../../discover/data/models/featured_title_model.dart';
 import '../models/movie_model.dart';
 
 class TmdbRemoteDataSource {
@@ -113,6 +115,91 @@ class TmdbRemoteDataSource {
     final genres = byId.values.toList()
       ..sort((a, b) => a.name.compareTo(b.name));
     return genres;
+  }
+
+  Future<List<MovieModel>> fetchList({
+    required String endpoint,
+    required int page,
+    String? mediaType,
+  }) async {
+    if (!AppEnv.hasTmdbApiKey) {
+      throw const TmdbException(
+        'TMDB API key is missing. Add TMDB_API_KEY to .env and fully restart the app.',
+      );
+    }
+
+    final response = await _dio.get<Map<String, dynamic>>(
+      endpoint,
+      queryParameters: {'page': page, 'include_adult': false},
+    );
+
+    return _mapMovieResults(response.data, page: page, mediaType: mediaType);
+  }
+
+  Future<List<FeaturedTitleModel>> fetchFeaturedTitles() async {
+    if (!AppEnv.hasTmdbApiKey) {
+      throw const TmdbException(
+        'TMDB API key is missing. Add TMDB_API_KEY to .env and fully restart the app.',
+      );
+    }
+
+    final response = await _dio.get<Map<String, dynamic>>(
+      '/trending/all/day',
+      queryParameters: {'include_adult': false},
+    );
+
+    final results = (response.data?['results'] as List<dynamic>? ?? [])
+        .whereType<Map<String, dynamic>>()
+        .where((json) => json['backdrop_path'] != null)
+        .take(8)
+        .toList();
+
+    return [
+      for (var index = 0; index < results.length; index++)
+        FeaturedTitleModel.fromJson(results[index]),
+    ];
+  }
+
+  Future<List<DiscoverPersonModel>> fetchPeople(String endpoint) async {
+    if (!AppEnv.hasTmdbApiKey) {
+      throw const TmdbException(
+        'TMDB API key is missing. Add TMDB_API_KEY to .env and fully restart the app.',
+      );
+    }
+
+    final response = await _dio.get<Map<String, dynamic>>(endpoint);
+    final results = (response.data?['results'] as List<dynamic>? ?? [])
+        .whereType<Map<String, dynamic>>()
+        .where((json) => json['profile_path'] != null)
+        .take(12)
+        .toList();
+
+    return [for (final result in results) DiscoverPersonModel.fromJson(result)];
+  }
+
+  Future<List<MovieModel>> searchTitles({
+    required String query,
+    required int page,
+    required String filter,
+  }) async {
+    if (!AppEnv.hasTmdbApiKey) {
+      throw const TmdbException(
+        'TMDB API key is missing. Add TMDB_API_KEY to .env and fully restart the app.',
+      );
+    }
+
+    final endpoint = switch (filter) {
+      'movie' => '/search/movie',
+      'tv' => '/search/tv',
+      _ => '/search/multi',
+    };
+
+    final response = await _dio.get<Map<String, dynamic>>(
+      endpoint,
+      queryParameters: {'query': query, 'page': page, 'include_adult': false},
+    );
+
+    return _mapMovieResults(response.data, page: page);
   }
 
   List<MovieModel> _mapMovieResults(

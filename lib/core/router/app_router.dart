@@ -6,6 +6,7 @@ import '../../features/auth/presentation/pages/register_page.dart';
 import '../../features/movie_details/presentation/pages/movie_details_page.dart';
 import '../../features/movie_details/presentation/pages/trailer_player_page.dart';
 import '../../features/person/presentation/pages/person_details_page.dart';
+import '../../features/search/presentation/pages/search_page.dart';
 import '../../features/shell/presentation/pages/main_shell_page.dart';
 import '../../features/splash/presentation/pages/splash_page.dart';
 import '../../features/vjs_genres/presentation/pages/title_listing_page.dart';
@@ -78,6 +79,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           );
         },
       ),
+      GoRoute(path: '/search', builder: (context, state) => const SearchPage()),
     ],
   );
 });

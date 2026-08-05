@@ -42,7 +42,7 @@ class _VjsGenresPageState extends ConsumerState<VjsGenresPage> {
                 children: [
                   const Expanded(child: LugaBoxLogo(size: 19)),
                   IconButton(
-                    onPressed: () {},
+                    onPressed: () => context.push('/search'),
                     icon: const Icon(Icons.search_rounded, size: 31),
                   ),
                   IconButton(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../discover/presentation/pages/discover_page.dart';
 import '../../../home/presentation/pages/home_page.dart';
 import '../../../vjs_genres/presentation/pages/vjs_genres_page.dart';
 
@@ -16,11 +17,7 @@ class MainShellPage extends StatefulWidget {
 class _MainShellPageState extends State<MainShellPage> {
   int _selectedIndex = 0;
 
-  static const _pages = [
-    HomePage(),
-    VjsGenresPage(),
-    _ComingSoonPage(label: 'Discover'),
-  ];
+  static const _pages = [HomePage(), VjsGenresPage(), DiscoverPage()];
 
   @override
   Widget build(BuildContext context) {
@@ -65,26 +62,6 @@ class _MainShellPageState extends State<MainShellPage> {
               label: 'Discover',
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _ComingSoonPage extends StatelessWidget {
-  const _ComingSoonPage({required this.label});
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        label,
-        style: const TextStyle(
-          color: AppColors.muted,
-          fontSize: 18,
-          fontWeight: FontWeight.w700,
         ),
       ),
     );
