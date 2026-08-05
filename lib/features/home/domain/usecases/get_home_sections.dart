@@ -22,6 +22,17 @@ class GetHomeSections {
 
   static const configs = [
     MovieSectionConfig(
+      title: 'Latest on LugaBox',
+      subtitle: 'Fresh movies and series just added for you',
+      source: MovieSectionSource.nowPlaying,
+    ),
+    MovieSectionConfig(
+      title: 'Latest uploads',
+      subtitle: 'Recently added movies and series',
+      source: MovieSectionSource.popular,
+      page: 2,
+    ),
+    MovieSectionConfig(
       title: 'Trending',
       subtitle: 'Popular picks across LugaBox',
       source: MovieSectionSource.trending,
@@ -44,17 +55,6 @@ class GetHomeSections {
       title: 'Browse by Genres',
       subtitle: 'Find something for your mood',
       source: MovieSectionSource.popular,
-    ),
-    MovieSectionConfig(
-      title: 'Latest on LugaBox',
-      subtitle: 'Fresh movies and series just added for you',
-      source: MovieSectionSource.nowPlaying,
-    ),
-    MovieSectionConfig(
-      title: 'Latest uploads',
-      subtitle: 'Recently added movies and series',
-      source: MovieSectionSource.popular,
-      page: 2,
     ),
     MovieSectionConfig(
       title: 'Mini Series',

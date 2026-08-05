@@ -7,6 +7,7 @@ void main() {
   Directory('assets/branding').createSync(recursive: true);
   _writeIcon('assets/branding/launcher_icon.png', 1024);
   _writeSplash('assets/branding/splash_logo.png', 1200, 420);
+  _writeAndroid12Splash('assets/branding/android12_splash_icon.png', 960);
 }
 
 void _writeIcon(String path, int size) {
@@ -43,6 +44,39 @@ void _writeSplash(String path, int width, int height) {
   _drawArc(image, width, y: (height * .64).round(), width: 520);
 
   File(path).writeAsBytesSync(encodePng(image));
+}
+
+void _writeAndroid12Splash(String path, int size) {
+  final image = Image(width: size, height: size);
+  fill(image, color: ColorRgba8(0, 0, 0, 0));
+
+  final center = size ~/ 2;
+  final radius = (size * .25).round();
+  fillCircle(
+    image,
+    x: center,
+    y: center,
+    radius: radius,
+    color: ColorRgb8(17, 17, 17),
+  );
+  _drawCircleOutline(image, center, center, radius, ColorRgb8(229, 9, 20));
+  _drawLogoText(image, size, centerY: center, maxWidth: (size * .40).round());
+  _drawArc(image, size, y: (size * .57).round(), width: (size * .35).round());
+
+  File(path).writeAsBytesSync(encodePng(image));
+}
+
+void _drawCircleOutline(Image image, int cx, int cy, int radius, Color color) {
+  for (var angle = 0; angle < 360; angle++) {
+    final radians = angle * pi / 180;
+    for (var thickness = 0; thickness < 8; thickness++) {
+      final x = cx + cos(radians) * (radius - thickness);
+      final y = cy + sin(radians) * (radius - thickness);
+      if (x >= 0 && x < image.width && y >= 0 && y < image.height) {
+        image.setPixel(x.round(), y.round(), color);
+      }
+    }
+  }
 }
 
 void _drawLogoText(
