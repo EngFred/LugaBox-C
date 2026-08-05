@@ -5,7 +5,9 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/lugabox_logo.dart';
+import '../../../../core/session/session_store.dart';
 import '../../../auth/presentation/pages/login_page.dart';
+import '../../../shell/presentation/pages/main_shell_page.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -20,8 +22,10 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 2), () {
-      if (mounted) context.go(LoginPage.routePath);
+    Timer(const Duration(seconds: 2), () async {
+      final isLoggedIn = await SessionStore.isLoggedIn();
+      if (!mounted) return;
+      context.go(isLoggedIn ? MainShellPage.routePath : LoginPage.routePath);
     });
   }
 

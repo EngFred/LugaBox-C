@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/lugabox_logo.dart';
+import '../../../../core/widgets/profile_menu_button.dart';
 
 class HomeAppBar extends StatelessWidget {
   const HomeAppBar({super.key});
@@ -25,11 +26,7 @@ class HomeAppBar extends StatelessWidget {
               icon: const Icon(Icons.cast_rounded, size: 29),
               color: AppColors.white,
             ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.more_vert_rounded, size: 29),
-              color: AppColors.white,
-            ),
+            const ProfileMenuButton(),
           ],
         ),
       ),

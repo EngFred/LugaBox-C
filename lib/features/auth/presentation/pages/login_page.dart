@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/session/session_store.dart';
 import '../../../shell/presentation/pages/main_shell_page.dart';
 import '../widgets/auth_back_button.dart';
 import '../widgets/auth_primary_button.dart';
@@ -20,7 +21,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController(text: 'hmm@gmail.com');
+  final _emailController = TextEditingController(text: 'test@gmail.com');
   final _passwordController = TextEditingController();
 
   @override
@@ -97,9 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(height: 30),
                 const _DividerWithText(),
                 const SizedBox(height: 37),
-                SocialAuthButton(
-                  onPressed: () => context.go(MainShellPage.routePath),
-                ),
+                SocialAuthButton(onPressed: _completeLogin),
                 const SizedBox(height: 58),
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -129,10 +128,15 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _submit() {
+  Future<void> _submit() async {
     if (_formKey.currentState?.validate() ?? false) {
-      context.go(MainShellPage.routePath);
+      await _completeLogin();
     }
+  }
+
+  Future<void> _completeLogin() async {
+    await SessionStore.markLoggedIn();
+    if (mounted) context.go(MainShellPage.routePath);
   }
 }
 
